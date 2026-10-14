@@ -1,6 +1,5 @@
 package com.example.next_link;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -37,6 +35,5 @@ final Map<Integer, String> videoUrls = Map.of(  1,"https://www.youtube.com/short
         }else{
             return ResponseEntity.notFound().build();
         }
-
     }
 }
