@@ -1,6 +1,7 @@
 package com.example.next_link;
 
 
+import com.example.next_link.controller.RedirectController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

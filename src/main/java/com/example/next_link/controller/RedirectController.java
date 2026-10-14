@@ -1,4 +1,4 @@
-package com.example.next_link;
+package com.example.next_link.controller;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
@@ -14,7 +14,7 @@ import java.util.Map;
 @RestController
 public class RedirectController {
 
-final Map<Integer, String> videoUrls = Map.of(  1,"https://www.youtube.com/shorts/C-GZdIT1_I0?feature=share",
+    final Map<Integer, String> videoUrls = Map.of(  1,"https://www.youtube.com/shorts/C-GZdIT1_I0?feature=share",
                                                 2,"https://www.youtube.com/shorts/N0V85fTvuQU?feature=share",
                                                 3,"https://www.youtube.com/shorts/x18rPV6awok?feature=share");
     @GetMapping("/r")
