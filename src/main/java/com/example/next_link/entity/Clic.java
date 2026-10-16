@@ -28,4 +28,7 @@ public class Clic {
     @ManyToOne
     private Video video;
 
+    @ManyToOne
+    private Person person;
+
 }

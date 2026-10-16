@@ -33,9 +33,6 @@ public class RedirectControllerTest {
     @MockitoBean
     ClicService clicService;
 
-
-
-
     @Test
     public void givenExisting_whenGetRequest_thenRedirectToYoutube()
 
