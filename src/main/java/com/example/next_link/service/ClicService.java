@@ -1,5 +1,6 @@
 package com.example.next_link.service;
 
+import com.example.next_link.dto.ClicStat;
 import com.example.next_link.dto.RegistrationForm;
 import com.example.next_link.dto.ResolvedLink;
 import com.example.next_link.entity.Canal;
@@ -13,6 +14,7 @@ import com.example.next_link.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
@@ -112,7 +114,11 @@ public class ClicService {
             return personRepository.save(newPerson);
         }
 
+    }
 
+    public List<ClicStat> getClicStats(){
+
+        return clicRepository.countClicsByCanalAndVideo();
     }
 
     private Optional<UUID> convertToUUID(String word){
@@ -137,6 +143,9 @@ public class ClicService {
         return Optional.empty();
 
     }
+
+
+
 
 
 
