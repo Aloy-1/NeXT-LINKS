@@ -1,10 +1,14 @@
 package com.example.next_link.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -17,19 +21,19 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "last_name" , nullable = false)
-    private String lastName;
+    @Column(name = "full_name" , nullable = false)
+    private String fullName;
 
-    @Column(name = "first_name" , nullable = false)
-    private String firstName;
+    @CreationTimestamp
+    @Column(name = "created_at" , nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    @Column(name = "phone_number" , nullable = false)
-    private String phoneNumber;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "promotion" , nullable = false)
+    private Promotion promotion;
 
-    @Column(name = "email" , nullable = false , unique = true)
-    private String email;
-
-    @Column(name = "visitorId" , nullable = false , unique = true)
+    @Column(name = "visitor_id" , nullable = false , unique = true)
     private java.util.UUID visitorId;
+
 
 }

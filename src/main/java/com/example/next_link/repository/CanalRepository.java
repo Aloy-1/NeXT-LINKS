@@ -9,4 +9,5 @@ public interface CanalRepository extends JpaRepository<Canal, Integer> {
 
     Optional<Canal> findByName(String name);
 
+    Optional<Canal> findById(Integer integer);
 }

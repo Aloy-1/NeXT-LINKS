@@ -3,245 +3,81 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeXT - Inscription</title>
+    <link rel="icon" href="data:,">
+    <title>NeXT</title>
     <style>
-        /* Réinitialisation de base */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        /* Corps de la page réactif */
-        body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            overflow-y: auto;
-            position: relative;
-            padding: 1rem;
-        }
-
-        /* --- DESIGN DE L'ARRIÈRE-PLAN DE MARQUE --- */
-        .brand-bg-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4rem;
-            user-select: none;
-            pointer-events: none;
-            z-index: 1;
-            white-space: nowrap;
-        }
-
-        .bg-text-large {
-            font-size: 26vw;
-            font-weight: 900;
-            letter-spacing: -0.5rem;
-            color: transparent;
-            -webkit-text-stroke: 4px rgba(255, 255, 255, 0.12);
-            text-transform: uppercase;
-        }
-
-        .bg-text-medium {
-            font-size: 10vw;
-            font-weight: 800;
-            letter-spacing: -0.2rem;
-            color: transparent;
-            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.06);
-            text-transform: uppercase;
-            opacity: 0.8;
-        }
-
-        /* --- CONTENEUR DU FORMULAIRE PLUS ÉTROIT (360px max) --- */
-        .form-container {
-            position: relative;
-            z-index: 2;
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px rgba(255, 255, 255, 0.15) solid;
-            padding: 2rem;
-            border-radius: 24px;
-            width: 100%;
-
-            /* Changement majeur : Formulaire beaucoup plus fin pour libérer l'arrière-plan */
-            max-width: 360px;
-
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        /* Barre de défilement interne discrète */
-        .form-container::-webkit-scrollbar {
-            width: 4px;
-        }
-        .form-container::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-        }
-
-        .form-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
-        }
-
-        /* Titre principal */
-        h1 {
-            color: #ffffff;
-            font-size: 1.4rem;
-            margin-bottom: 0.25rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.9);
-        }
-
-        p.subtitle {
-            color: #cbd5e1;
-            font-size: 0.8rem;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
-        }
-
-        /* Groupes de saisie */
-        .input-group {
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        .input-group label {
-            display: block;
-            color: #ffffff;
-            font-size: 0.75rem;
-            margin-bottom: 0.4rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 700;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 0.7rem 0.9rem;
-            background: rgba(15, 23, 42, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: #ffffff;
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .input-group input:focus {
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.25);
-            background: rgba(15, 23, 42, 0.85);
-        }
-
-        /* Messages d'erreur Thymeleaf */
-        .error-message {
-            display: block;
-            color: #f87171;
-            font-size: 0.78rem;
-            margin-top: 0.4rem;
-            font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-        }
-
-        /* Bouton Soumettre */
-        .btn-submit {
-            width: 100%;
-            padding: 0.8rem;
-            background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
-            border: none;
-            border-radius: 12px;
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.5);
-            margin-top: 0.5rem;
-        }
-
-        .btn-submit:hover {
-            opacity: 0.95;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.7);
-        }
-
-        .btn-submit:active {
-            transform: translateY(1px);
-        }
-
-        /* Ajustements pour petits écrans */
-        @media (max-height: 650px) {
-            .form-container {
-                padding: 1.25rem;
-            }
-            h1 { font-size: 1.2rem; }
-            p.subtitle { margin-bottom: 1rem; }
-        }
+        :root{--r:#8B2617;--t:#222;--l:#666;--b:#ccc}
+        body{font-family:system-ui,sans-serif;max-width:22rem;margin:auto;padding:1.5rem 1rem;color:var(--t);display:flex;flex-direction:column;gap:1rem;text-align:center}
+        h1{color:var(--r);font-size:2.2rem;margin:0;font-weight:800}
+        .subtitle{color:var(--l);font-size:.95rem;margin:0}
+        form{display:flex;flex-direction:column;gap:1rem;text-align:left}
+        #name{width:100%;box-sizing:border-box;font-size:16px;padding:.75rem 1rem;border:1px solid var(--b);border-radius:8px;outline:none}
+        #name:focus{border-color:var(--r)}
+        form>p{margin:0;font-size:.95rem;font-weight:500}
+        .promo-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+        .radio-container{position:relative;display:flex}
+        .radio-container input[type="radio"]{position:absolute;opacity:0;width:0;height:0}
+        .radio-container span{display:flex;align-items:center;justify-content:center;width:100%;height:44px;border:1px solid var(--b);border-radius:8px;font-size:.9rem;font-weight:500;cursor:pointer;box-sizing:border-box}
+        .radio-container input[type="radio"]:checked+span{background-color:var(--r);color:#fff;border-color:var(--r)}
+        .radio-container input[type="radio"]:focus-visible+span{outline:2px solid var(--r)}
+        button[type="submit"]{width:100%;height:44px;background-color:var(--r);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:bold;cursor:pointer;margin-top:.5rem}
+        .footer-text{color:var(--l);font-size:.85rem;margin:0;line-height:1.3}
+        hr{border:none;border-top:1px solid #e0e0e0;width:100%;margin:.5rem 0}
+        #link{color:var(--l);font-size:.85rem;text-decoration:none}
+        .error{color:var(--r);font-size:.8rem;margin:-.5rem 0 0 0}
     </style>
 </head>
 <body>
 
-<!-- Structure de marque en arrière-plan -->
-<div class="brand-bg-container">
-    <div class="bg-text-medium">NeXT</div>
-    <div class="bg-text-large">NeXT</div>
-    <div class="bg-text-medium">NeXT</div>
-</div>
+<!--/* En-tête du titre principal */-->
+<h1>NeXT</h1>
 
-<!-- Conteneur ultra-transparent et aminci du formulaire -->
-<div class="form-container">
-    <h1>Bonjour</h1>
-    <p class="subtitle">Veuillez renseigner vos informations pour regarder la vidéo</p>
+<!--/* Sous-titre explicatif */-->
+<p class="subtitle">Dis-nous qui tu es, puis ça s'ouvre.</p>
 
-    <form action="#" th:action="@{/register}" th:object="${formInfosUser}" method="post" novalidate>
+<!--/* Formulaire principal utilisateur */-->
+<form action="#" th:action="@{/register}" th:object="${formInfosUser}" method="post">
 
-        <div class="input-group">
-            <label for="lastname">Nom</label>
-            <input type="text" id="lastname" th:field="*{lastName}" placeholder="Votre nom" />
-            <span class="error-message" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Erreur</span>
-        </div>
+    <input id="shortCode" th:field="*{shortCode}" type="hidden" />
 
-        <div class="input-group">
-            <label for="firstname">Prénom</label>
-            <input type="text" id="firstname" th:field="*{firstName}" placeholder="Votre prénom" />
-            <span class="error-message" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Erreur</span>
-        </div>
+    <input id="name" th:field="*{fullName}" placeholder="Ton prénom et ton nom"/>
+    <p class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Erreur</p>
 
-        <div class="input-group">
-            <label for="number">Numéro de téléphone</label>
-            <input type="text" id="number" th:field="*{phoneNumber}" placeholder="06 00 00 00 00" />
-            <span class="error-message" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Erreur</span>
-        </div>
+    <p>Tu es en...</p>
 
-        <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" th:field="*{email}" placeholder="nom@exemple.com" />
-            <span class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Erreur courriel</span>
-        </div>
+    <!--/* Grille de sélection des promotions conforme au design */-->
+    <div class="promo-grid">
+        <label class="radio-container">
+            <input type="radio" id="MSP1" th:field="*{promotion}" value="MSP1">
+            <span>MSP 1</span>
+        </label>
 
-        <!-- Champs masqués préservés -->
-        <input id="videoId" th:field="*{videoId}" type="hidden" />
-        <input id="canal" th:field="*{canal}" type="hidden"/>
+        <label class="radio-container">
+            <input type="radio" id="MSP2" th:field="*{promotion}" value="MSP2">
+            <span>MSP 2</span>
+        </label>
 
-        <button type="submit" class="btn-submit">Envoyer</button>
-    </form>
-</div>
+        <label class="radio-container">
+            <input type="radio" id="POLYTECH_OTHER" th:field="*{promotion}" value="POLYTECH_OTHER">
+            <span>Polytech, autre</span>
+        </label>
+
+        <label class="radio-container">
+            <input type="radio" id="NOT_POLYTECH" th:field="*{promotion}" value="NOT_POLYTECH">
+            <span>Pas à Polytech</span>
+        </label>
+    </div>
+    <p class="error" th:if="${#fields.hasErrors('promotion')}" th:errors="*{promotion}">Erreur</p>
+
+    <button type="submit">Ouvrir</button>
+
+</form>
+
+<p class="footer-text">On ne publie rien. C'est juste pour savoir à qui on parle.</p>
+
+<hr>
+
+<a id="link" th:href="@{/r/{shortCode}/anonymous(shortCode=${formInfosUser.shortCode})}">continuer sans donner mon nom</a>
 
 </body>
 </html>

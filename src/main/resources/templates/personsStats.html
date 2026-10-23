@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <title>Personnes</title>
+    <style>
+        :root{--t:#222;--l:#888;--bg:#f5f5f5;--border:#eee}
+        body{font-family:system-ui,sans-serif;margin:0;color:var(--t)}
+        header{background-color:var(--t);color:#fff;padding:.75rem 1rem}
+        header>div{max-width:48rem;margin:auto;display:flex;align-items:center;gap:1.5rem}
+        header span{font-weight:bold}
+        header nav{display:flex;gap:1.5rem}
+        header nav a{color:#aaa;text-decoration:none;font-weight:500}
+        header nav a[aria-current]{color:#fff;font-weight:bold}
+        main{padding:1rem;max-width:48rem;margin:auto}
+        h1{font-size:1.8rem;margin-top:0}
+        .table-wrapper{overflow-x:auto}
+        table{width:100%;border-collapse:collapse;font-size:.9rem}
+        th{text-align:left;font-size:.75rem;color:var(--l);background-color:var(--bg);padding:.6rem .75rem;border-bottom:1px solid var(--border);font-weight:500;letter-spacing:.05em}
+        td{padding:.75rem;border-bottom:1px solid var(--border)}
+        td:first-child{font-weight:bold}
+        td:nth-child(n+3){color:var(--l)}
+        @media (max-width:480px){
+            main{padding:.5rem}
+            table{font-size:.8rem}
+            th,td{padding:.5rem}
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div>
+        <span>NeXT Links</span>
+        <nav>
+            <a th:href="@{/personnes}"  aria-current="page">Personnes</a>
+            <a th:href="@{/liens}">Liens</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1>Personnes</h1>
+
+    <div class="table-wrapper" th:if="${not #lists.isEmpty(personsStats)}">
+        <table>
+            <thead>
+            <tr>
+                <th>NOM</th>
+                <th>PROMO</th>
+                <th>1re VENUE</th>
+                <th>DERNIÈRE</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="personStat: ${personsStats}">
+                <td th:text="${personStat.fullName}">Grace Kerem</td>
+                <td th:text="${personStat.promotion.label}">MSP 1</td>
+                <td th:text="${#temporals.format(personStat.firstVisit, 'd MMM yyyy')}">12 oct. 2026</td>
+                <td th:text="${#temporals.format(personStat.lastVisit, 'd MMM yyyy')}">12 oct. 2026</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${#lists.isEmpty(personsStats)}">
+        Aucune donnée statistique disponible pour le moment.
+    </div>
+</main>
+
+</body>
+</html>

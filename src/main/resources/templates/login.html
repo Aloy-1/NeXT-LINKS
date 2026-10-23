@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <title>Connexion — NeXT Links</title>
+    <style>
+        :root{--t:#222;--l:#888;--b:#ccc;--r:#8B2617}
+        body{font-family:system-ui,sans-serif;margin:0;color:var(--t);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;box-sizing:border-box}
+        .card{width:100%;max-width:22rem;border:1px solid var(--b);border-radius:10px;padding:2rem 1.75rem;box-sizing:border-box}
+        h1{color:var(--r);font-size:1.4rem;margin:0}
+        .subtitle{color:var(--l);font-size:.85rem;margin:.35rem 0 1.25rem}
+        form{display:flex;flex-direction:column;gap:.75rem}
+        input{width:100%;box-sizing:border-box;font-size:16px;padding:.6rem .75rem;border:1px solid var(--b);border-radius:6px}
+        input:focus{border-color:var(--r);outline:none}
+        button{height:44px;border:none;border-radius:6px;background:var(--r);color:#fff;font-size:1rem;font-weight:bold;cursor:pointer}
+        .error{color:var(--r);font-size:.85rem;margin:0}
+        .info{color:var(--l);font-size:.85rem;margin:0}
+    </style>
+</head>
+<body>
+
+<main class="card">
+    <h1>NeXT Links</h1>
+    <p class="subtitle">Outil interne — équipe NeXT</p>
+
+    <form th:action="@{/connexion}" method="post">
+        <p class="error" th:if="${param.error}">Identifiant ou mot de passe incorrect.</p>
+        <p class="info" th:if="${param.logout}">Tu es déconnecté.</p>
+
+        <input name="username" placeholder="Identifiant" aria-label="Identifiant"
+               autocomplete="username" autocapitalize="none" required>
+        <input name="password" type="password" placeholder="Mot de passe" aria-label="Mot de passe"
+               autocomplete="current-password" required>
+
+        <button type="submit">Se connecter</button>
+    </form>
+</main>
+
+</body>
+</html>

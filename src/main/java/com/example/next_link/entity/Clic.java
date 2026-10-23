@@ -23,12 +23,11 @@ public class Clic {
     private LocalDateTime dateTime;
 
     @ManyToOne
-    private Canal canal;
+    @JoinColumn( name= "link_id", nullable = false)
+    private Link link;
 
     @ManyToOne
-    private Video video;
-
-    @ManyToOne
+    @JoinColumn( nullable = true )
     private Person person;
 
 }

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+    <title>Nouveau lien</title>
+    <style>
+        :root{--t:#222;--l:#888;--b:#ccc;--r:#8B2617}
+        body{font-family:system-ui,sans-serif;margin:0;color:var(--t)}
+        header{background-color:var(--t);color:#fff;padding:.75rem 1rem}
+        header>div{max-width:48rem;margin:auto;display:flex;align-items:center;gap:1.5rem}
+        header span{font-weight:bold}
+        header nav{display:flex;gap:1.5rem}
+        header nav a{color:#aaa;text-decoration:none;font-weight:500}
+        header nav a[aria-current]{color:#fff;font-weight:bold}
+        main{padding:1rem;max-width:48rem;margin:auto}
+        h1{font-size:1.8rem;margin-top:0}
+        .layout{display:grid;gap:2rem}
+        aside{display:flex;flex-direction:column;gap:.5rem;align-self:start}
+        aside input.new-link{border:1px solid var(--r);background:#f5f2ec;color:var(--r);font-family:monospace;padding:1rem;border-radius:6px}
+        aside button.copy{height:44px;padding:0 1.5rem;border-radius:6px;font-weight:bold;font-size:1rem;background:#fff;color:var(--t);border:1px solid var(--b);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;align-self:flex-start}
+        aside button.copy:active{background:#eee}
+        aside .after-title{font-weight:bold;margin:0}
+        aside .hint{color:var(--l);font-size:.85rem;margin:0}
+        form{display:flex;flex-direction:column;gap:.35rem}
+        label{font-weight:bold;font-size:.9rem;margin-top:.5rem}
+        input,select{width:100%;box-sizing:border-box;font-size:16px;padding:.5rem .75rem;border:1px solid var(--b);border-radius:6px;background:#fff}
+        input:focus,select:focus{border-color:var(--r);outline:none}
+        .actions{display:flex;gap:.75rem;margin-top:.75rem}
+        .actions button,.actions a{height:44px;padding:0 1.5rem;border-radius:6px;font-weight:bold;font-size:1rem;display:inline-flex;align-items:center;text-decoration:none}
+        .actions button{background:var(--r);color:#fff;border:none;cursor:pointer}
+        .actions a{border:1px solid var(--b);color:var(--t)}
+        .error{color:var(--r);font-size:.8rem;margin:0}
+        @media (min-width:48rem){.layout{grid-template-columns:1fr 1fr}aside{grid-column:2;grid-row:1}}
+        @media (max-width:480px){main{padding:.5rem}}
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div>
+        <span>NeXT Links</span>
+        <nav>
+            <a th:href="@{/personnes}">Personnes</a>
+            <a th:href="@{/liens}" aria-current="page">Liens</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <h1>Nouveau lien</h1>
+    <div class="layout">
+
+        <aside th:if="${newLink}">
+
+            <p class="after-title">Après création :</p>
+            <input id="nl" class="new-link" readonly th:value="${newLink}">
+            <button type="button" class="copy"
+                    onclick="navigator.clipboard.writeText(document.getElementById('nl').value)
+                 .then(() => { this.textContent = 'Copié ✓'; setTimeout(() => this.textContent = 'Copier', 2000); })
+                 .catch(() => { const f = document.getElementById('nl'); f.focus(); f.select(); this.textContent = 'Copie manuelle'; })">Copier</button>
+        </aside>
+        <!--/* Formulaire de création d'un lien court */-->
+        <form action="#" th:action="@{/liens}" th:object="${linkForm}" method="post">
+
+            <label for="url">Adresse de destination *</label>
+            <input id="url" th:field="*{url}" placeholder="https://youtu.be/…"/>
+            <p class="error" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">Erreur</p>
+
+            <label for="title">Titre interne *</label>
+            <input id="title" th:field="*{title}" placeholder="Vidéo — La borne supérieure, séance 1"/>
+            <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Erreur</p>
+
+            <label for="ue">UE *</label>
+            <select id="ue" th:field="*{ueId}">
+                <option value="">Choisis une UE</option>
+                <option th:each="ue : ${ueList}" th:value="${ue.id}" th:text="${ue.name}">Analyse réelle</option>
+            </select>
+            <p class="error" th:if="${#fields.hasErrors('ueId')}" th:errors="*{ueId}">Erreur</p>
+
+            <label for="canal">Canal de publication *</label>
+            <select id="canal" th:field="*{canalId}">
+                <option value="">Choisis un canal</option>
+                <option th:each="canal : ${canalList}" th:value="${canal.id}" th:text="${canal.name}">chaîne WhatsApp</option>
+            </select>
+            <p class="error" th:if="${#fields.hasErrors('canalId')}" th:errors="*{canalId}">Erreur</p>
+
+            <label for="date">Date de publication *</label>
+            <input id="date" type="datetime-local" th:field="*{publicationDate}"/>
+            <p class="error" th:if="${#fields.hasErrors('publicationDate')}" th:errors="*{publicationDate}">Erreur</p>
+
+            <div class="actions">
+                <button type="submit">Créer</button>
+                <a th:href="@{/liens}">Annuler</a>
+            </div>
+
+        </form>
+    </div>
+</main>
+
+</body>
+</html>
+
+```

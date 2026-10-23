@@ -1,19 +1,18 @@
 package com.example.next_link.service;
 
-import com.example.next_link.dto.ClicStat;
+import com.example.next_link.dto.LinkStat;
+import com.example.next_link.dto.PersonStat;
 import com.example.next_link.dto.RegistrationForm;
-import com.example.next_link.dto.ResolvedLink;
-import com.example.next_link.entity.Canal;
+
 import com.example.next_link.entity.Clic;
 import com.example.next_link.entity.Person;
-import com.example.next_link.entity.Video;
+import com.example.next_link.entity.Link;
 import com.example.next_link.repository.CanalRepository;
 import com.example.next_link.repository.ClicRepository;
 import com.example.next_link.repository.PersonRepository;
-import com.example.next_link.repository.VideoRepository;
+import com.example.next_link.repository.LinkRepository;
 import lombok.RequiredArgsConstructor;
 
-import java.security.SecureRandom;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,22 +30,31 @@ public class ClicService {
 
     private final ClicRepository clicRepository;
     private final CanalRepository canalRepository;
-    private final VideoRepository videoRepository;
+    private final LinkRepository linkRepository;
     private final PersonRepository personRepository;
+    private final ShortCodeGenerator shortCodeGenerator;
 
-    public void registerClic(Canal canal, Video video, Person person){
+
+    public void registerClic( Link link, Person person){
 
         LocalDateTime dateTime = LocalDateTime.now();
-
         Clic clic = new Clic();
-        clic.setCanal(canal);
-        clic.setVideo(video);
+        clic.setLink(link);
         clic.setDateTime(dateTime);
         clic.setPerson(person);
-
         clicRepository.save(clic);
-
     }
+
+    public void registerAnonymousClic(Link link){
+
+        LocalDateTime dateTime = LocalDateTime.now();
+        Clic clic = new Clic();
+        clic.setLink(link);
+        clic.setDateTime(dateTime);
+        clicRepository.save(clic);
+    }
+
+
 
     public Optional<String> handleClic(String canalName, Integer videoId  ){
 
@@ -67,19 +75,17 @@ public class ClicService {
 
     }
 
-    public Optional<ResolvedLink> resolveLink(String canalName, Integer videoId){
+    public Optional<Link> resolveLink(UUID shortCode){
 
-        Optional<Video> video = videoRepository.findById(videoId);
-
-        Optional<Canal> canal = canalRepository.findByName(canalName);
-
-        if (video.isEmpty() || canal.isEmpty()){
+        if(shortCode == null){
 
             return Optional.empty();
         }
 
-        return Optional.of(new ResolvedLink(video.get(), canal.get()));
+        return linkRepository.findByShortCodeAndActiveTrue(shortCode);
+
     }
+
 
     public Optional<Person> resolvePerson(String visitorId){
 
@@ -95,30 +101,27 @@ public class ClicService {
        }
     }
 
-    public Person findOrCreatePerson(RegistrationForm registrationForm){
+    public Person createPerson(RegistrationForm registrationForm){
 
-        Optional<Person> person = personRepository.findByEmail(registrationForm.email());
+        Person newPerson = new Person();
+        UUID visitorId = UUID.randomUUID();
 
-        if (person.isPresent())
-            return person.get();
+        newPerson.setFullName(registrationForm.fullName());
+        newPerson.setPromotion(registrationForm.promotion());
+        newPerson.setVisitorId(visitorId);
 
-        else{
-            Person newPerson = new Person();
-            UUID visitorId = UUID.randomUUID();
-
-            newPerson.setEmail(registrationForm.email());
-            newPerson.setFirstName(registrationForm.firstName());
-            newPerson.setLastName(registrationForm.lastName());
-            newPerson.setPhoneNumber(registrationForm.phoneNumber());
-            newPerson.setVisitorId(visitorId);
-            return personRepository.save(newPerson);
-        }
+        return personRepository.save(newPerson);
 
     }
 
-    public List<ClicStat> getClicStats(){
+    public List<PersonStat> getPersonsStats(){
 
-        return clicRepository.countClicsByCanalAndVideo();
+        return clicRepository.listOfPersonsStats();
+    }
+
+    public List<LinkStat> getLinksStats(){
+
+        return linkRepository.listOfLinksStats();
     }
 
     private Optional<UUID> convertToUUID(String word){

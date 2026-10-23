@@ -11,12 +11,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Video {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "link" , nullable = false)
-    private String link;
+    @Column(name = "username" , nullable = false , unique = true)
+    private String username;
+
+
+    @Column(name = "password_hash" , nullable = false)
+    private String passwordHash;
+
 }

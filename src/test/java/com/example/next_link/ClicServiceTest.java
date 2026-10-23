@@ -2,7 +2,7 @@ package com.example.next_link;
 
 import com.example.next_link.entity.Canal;
 import com.example.next_link.entity.Clic;
-import com.example.next_link.entity.Video;
+import com.example.next_link.entity.Link;
 import com.example.next_link.repository.CanalRepository;
 import com.example.next_link.repository.ClicRepository;
 import com.example.next_link.repository.VideoRepository;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.time.LocalDateTime;
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +38,7 @@ public class ClicServiceTest {
 
     private  Canal canal;
 
-    private Video video;
+    private Link link;
 
     private Clic clic;
 
@@ -49,9 +49,9 @@ public class ClicServiceTest {
          canal = new Canal();
          canal.setName("chaineMSP1");
 
-         video = new Video();
-         video.setLink("https://www.youtube.com/shorts/C-GZdIT1_I0?feature=share");
-         video.setId(1);
+         link = new Link();
+         link.setLink("https://www.youtube.com/shorts/C-GZdIT1_I0?feature=share");
+         link.setId(1);
 
 
 
@@ -61,14 +61,14 @@ public class ClicServiceTest {
     @DisplayName("Should create a new clic")
     void  givenCanalAndVideo_whenRegisterClic_thenSaveClic(){
 
-        clicService.registerClic(canal, video);
+        clicService.registerClic(canal, link);
 
         Mockito.verify(clicRepository).save(clicCaptor.capture());
 
         Clic clicCaptorValue = clicCaptor.getValue();
 
         assertEquals(canal, clicCaptorValue.getCanal());
-        assertEquals(video, clicCaptorValue.getVideo());
+        assertEquals(link, clicCaptorValue.getLink());
         assertNotNull(clicCaptorValue.getDateTime());
     }
 
@@ -96,9 +96,9 @@ public class ClicServiceTest {
 
 
         when(canalRepository.findByName(unknownCanal)).thenReturn(Optional.empty());
-        when(videoRepository.findById(video.getId())).thenReturn(Optional.of(video));
+        when(videoRepository.findById(link.getId())).thenReturn(Optional.of(link));
 
-        java.util.Optional<String> clic = clicService.handleClic(unknownCanal, video.getId());
+        java.util.Optional<String> clic = clicService.handleClic(unknownCanal, link.getId());
 
         assertEquals(Optional.empty(),clic );
         Mockito.verify(clicRepository, never()).save(any());

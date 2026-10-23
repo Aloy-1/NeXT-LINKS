@@ -1,5 +1,6 @@
 package com.example.next_link.controller;
-import com.example.next_link.dto.ClicStat;
+import com.example.next_link.dto.LinkStat;
+import com.example.next_link.dto.PersonStat;
 import com.example.next_link.service.ClicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +15,25 @@ public class StatsController {
 
     private final ClicService clicService;
 
-    @GetMapping("/stats")
-    public ModelAndView getStats (){
+    @GetMapping("/personnes")
+    public ModelAndView getPersonsStats (){
 
-        List<ClicStat> statsClics = clicService.getClicStats();
-        System.out.println(statsClics);
+        List<PersonStat> personStats = clicService.getPersonsStats();
 
-        return new ModelAndView("formStatClics")
-                .addObject("stats",
-                        statsClics);
+        return new ModelAndView("personsStats")
+                .addObject("personsStats",
+                        personStats);
     }
+
+    @GetMapping("/liens")
+    public ModelAndView getLinksStats (){
+
+        List<LinkStat> linksStats = clicService.getLinksStats();
+
+        return new ModelAndView("linksStats")
+                .addObject("linksStats",
+                        linksStats);
+    }
+
+
 }

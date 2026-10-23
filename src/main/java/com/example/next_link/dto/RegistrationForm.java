@@ -1,24 +1,17 @@
 package com.example.next_link.dto;
 
+import com.example.next_link.entity.Promotion;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
-public record RegistrationForm(@NotBlank
-                               String canal,
+import java.util.UUID;
 
-                               @NotNull
-                               Integer videoId,
+public record RegistrationForm(@NotBlank( message = "SVP, Vous devez entrer votre nom")
+                               String fullName ,
 
-                               @NotBlank(message = "Vous devez entrer votre nom")
-                               String lastName,
+                               @NotNull( message = "Vous avez falsifié le formulaire")
+                               UUID shortCode,
 
-                               @NotBlank(message = "Vous devez entrer votre prénom")
-                               String firstName,
-
-                               @NotBlank @Email(message = "Adresse courriel invalide")
-                               String email,
-
-                               @NotBlank
-                               String phoneNumber) {
+                               @NotNull(message = "SVP, Vous devez mentionner votre niveau")
+                               Promotion promotion) {
 }
