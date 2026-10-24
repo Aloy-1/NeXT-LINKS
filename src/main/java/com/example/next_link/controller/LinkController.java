@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -32,7 +33,8 @@ public class LinkController {
     private final UeService ueService;
     private final LinkService linkService;
 
-    static final String NOM_DE_DOMAIN = "next.com";
+    @Value("${APP_BASE_URL}")
+    private String NOM_DE_DOMAIN;
 
     @GetMapping("/liens/nouveau")
     public ModelAndView getFormNewLink( @RequestParam(required = false)  String code ) {
