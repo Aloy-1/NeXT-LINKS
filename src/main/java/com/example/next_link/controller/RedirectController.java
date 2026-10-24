@@ -89,7 +89,7 @@ public class RedirectController {
 
         cookie.setMaxAge(360 * 24 * 60 * 60);
 
-        //cookie.setSecure(true);
+        cookie.setSecure(true);
 
         cookie.setHttpOnly(true);
 

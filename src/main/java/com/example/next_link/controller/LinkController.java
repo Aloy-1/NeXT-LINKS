@@ -1,16 +1,16 @@
 package com.example.next_link.controller;
 
 import com.example.next_link.dto.LinkForm;
-import com.example.next_link.dto.RegistrationForm;
+
 import com.example.next_link.entity.Canal;
 import com.example.next_link.entity.UE;
-import com.example.next_link.repository.LinkRepository;
+
 import com.example.next_link.service.CanalService;
-import com.example.next_link.service.ClicService;
+
 import com.example.next_link.service.LinkService;
 import com.example.next_link.service.UeService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.cache.spi.support.CollectionNonStrictReadWriteAccess;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
