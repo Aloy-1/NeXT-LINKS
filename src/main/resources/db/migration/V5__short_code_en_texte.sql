@@ -1,0 +1,1 @@
+alter table link alter column short_code type varchar(255) using short_code::text;

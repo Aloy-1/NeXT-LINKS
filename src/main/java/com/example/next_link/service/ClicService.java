@@ -75,7 +75,7 @@ public class ClicService {
 
     }
 
-    public Optional<Link> resolveLink(UUID shortCode){
+    public Optional<Link> resolveLink(String shortCode){
 
         if(shortCode == null){
 

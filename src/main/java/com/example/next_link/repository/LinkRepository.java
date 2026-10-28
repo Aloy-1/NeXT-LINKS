@@ -7,10 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 
 public interface LinkRepository extends JpaRepository<Link, Integer> {
-    Optional<Link> findByShortCodeAndActiveTrue(UUID shortCode);
+
+    Optional<Link> findByShortCodeAndActiveTrue(String shortCode);
+
+    boolean existsByShortCode(String shortCode);
 
     @Query("SELECT new com.example.next_link.dto.LinkStat(l.shortCode, l.title , u.name , l.publicationDate, Count(c.link), Count(c.person) ,l.active  ) " +
             "FROM Link l " +
@@ -18,7 +21,6 @@ public interface LinkRepository extends JpaRepository<Link, Integer> {
             "LEFT JOIN l.ue u " +
             "GROUP BY l.id , u.name " +
             "ORDER BY l.publicationDate DESC"
-
           )
     List<LinkStat> listOfLinksStats();
 

@@ -9,12 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
 public class LinkService {
-
 
     private final CanalService canalService;
     private final UeService ueService;
@@ -24,13 +23,12 @@ public class LinkService {
 
     public Optional<String> createLink(LinkForm form){
 
-
         Optional<UE> ue = ueService.findById( form.ueId());
         Optional<Canal> canal = canalService.findById(form.canalId());
 
-        if (ue.isPresent() && canal.isPresent() ){
+        if (ue.isPresent() && canal.isPresent()){
 
-            UUID shortCode = shortCodeGenerator.generate();
+            String shortCode =  generateUniqueCode();
 
             Link link = new Link();
 
@@ -48,12 +46,25 @@ public class LinkService {
         }
         return Optional.empty();
 
-
-
-
     }
 
+    private String generateUniqueCode(){
 
+        String shortCode;
+
+        for ( int i = 0; i <= 20;  i++){
+
+            shortCode = shortCodeGenerator.generate();
+
+            if(!linkRepository.existsByShortCode(shortCode)){
+
+                return shortCode;
+            }
+
+        }
+        throw new IllegalStateException(
+                "Impossible de générer un code unique après 20 essais");
+    }
 
 
 

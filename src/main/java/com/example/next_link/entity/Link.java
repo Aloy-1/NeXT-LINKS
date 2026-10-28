@@ -1,10 +1,11 @@
 package com.example.next_link.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+
 
 @Entity
 @Getter
@@ -18,7 +19,7 @@ public class Link {
     private Integer id;
 
     @Column(name = "short_code" , nullable = false , unique = true)
-    private UUID shortCode;
+    private String shortCode;
 
     @Column(name = "title" , nullable = false)
     private String title;

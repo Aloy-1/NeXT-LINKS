@@ -22,7 +22,7 @@ public record LinkForm(
                             Integer canalId ,
 
                             @NotNull(message = "les formats de la date et l'heure de publication ne sont pas valides.")
-                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+                            @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
                             LocalDateTime publicationDate) {
 }
 

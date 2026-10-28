@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import java.util.Optional;
-import java.util.UUID;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -26,7 +26,7 @@ public class RedirectController {
     static final String VISITOR_COOKIE = "visitorId";
 
     @GetMapping("/r/{shortCode}")
-    public ModelAndView redirect(@PathVariable UUID shortCode, @CookieValue(name = VISITOR_COOKIE, required = false) String visitorId) {
+    public ModelAndView redirect(@PathVariable String shortCode, @CookieValue(name = VISITOR_COOKIE, required = false) String visitorId) {
 
         Optional<Link> resolvedLink = clicService.resolveLink(shortCode);
 
@@ -103,7 +103,7 @@ public class RedirectController {
 
 
     @GetMapping("/r/{shortCode}/anonymous")
-    public ModelAndView registerAnonymousClic(@PathVariable UUID shortCode ) {
+    public ModelAndView registerAnonymousClic(@PathVariable String shortCode ) {
 
         Optional<Link> resolvedLink = clicService.resolveLink(shortCode);
 

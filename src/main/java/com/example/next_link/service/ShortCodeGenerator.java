@@ -1,14 +1,7 @@
 package com.example.next_link.service;
 
-import org.springframework.stereotype.Component;
+public interface ShortCodeGenerator {
 
-import java.util.UUID;
+    String generate();
 
-@Component
-public class ShortCodeGenerator {
-
-    public UUID generate(){
-
-        return UUID.randomUUID();
-    }
 }
